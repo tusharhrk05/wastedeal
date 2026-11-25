@@ -224,10 +224,10 @@ def page_message(title: str, message: str, *, success: bool = True, status: int 
     return render_template("message.html", title=title, message=message, success=success), status
 
 
-def public_demo_read_only():
+def public_demo_account_notice():
     return page_message(
-        "Public demo is read-only",
-        "This public demo uses sample data. Account creation and form submissions are disabled.",
+        "Guest demo",
+        "Sign-in and account creation are disabled in the public demo. You can submit test listings and requests as a guest. Use sample details only because entries are visible to everyone.",
         success=False,
         status=403,
     )
@@ -261,11 +261,19 @@ def analytics():
     disposal_count = db.execute("SELECT COUNT(*) FROM disposal_requests").fetchone()[0]
     contact_count = db.execute("SELECT COUNT(*) FROM contact_messages").fetchone()[0]
     quote_count = db.execute("SELECT COUNT(*) FROM quote_requests").fetchone()[0]
-    user_count = db.execute("SELECT COUNT(*) FROM users").fetchone()[0]
-    sample_count = sum(
+    sample_listing_count = db.execute(
+        "SELECT COUNT(*) FROM waste_listings WHERE is_sample = 1"
+    ).fetchone()[0]
+    visitor_listing_count = listing_count - sample_listing_count
+    sample_request_count = sum(
         db.execute(f"SELECT COUNT(*) FROM {table_name} WHERE is_sample = 1").fetchone()[0]
-        for table_name in ("waste_listings", "disposal_requests", "contact_messages", "quote_requests")
+        for table_name in ("disposal_requests", "contact_messages", "quote_requests")
     )
+    visitor_request_count = sum(
+        db.execute(f"SELECT COUNT(*) FROM {table_name} WHERE is_sample = 0").fetchone()[0]
+        for table_name in ("disposal_requests", "contact_messages", "quote_requests")
+    )
+    sample_count = sample_listing_count + sample_request_count
 
     now = datetime.now()
     first_visible_month = now.year * 12 + now.month - 1 - 5
@@ -314,10 +322,13 @@ def analytics():
     return render_template(
         "analytics.html",
         listing_count=listing_count,
+        visitor_listing_count=visitor_listing_count,
+        sample_listing_count=sample_listing_count,
         quantity_total=round(listing_totals["quantity"], 1),
         average_price=round(listing_totals["avg_price"], 2),
         total_requests=disposal_count + contact_count + quote_count,
-        user_count=user_count,
+        visitor_request_count=visitor_request_count,
+        sample_request_count=sample_request_count,
         sample_count=sample_count,
         months=months,
         material_mix=material_mix,
@@ -331,9 +342,9 @@ def analytics():
 def login():
     error = None
     email = ""
+    if DEMO_MODE:
+        return public_demo_account_notice()
     if request.method == "POST":
-        if DEMO_MODE:
-            return public_demo_read_only()
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "")
         user = get_db().execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -348,10 +359,10 @@ def login():
 @app.route("/signup", methods=["GET", "POST"])
 @app.route("/process-signup.php", methods=["POST"])
 def signup():
+    if DEMO_MODE:
+        return public_demo_account_notice()
     if request.method == "GET":
         return render_template("signup.html", error=None, values={})
-    if DEMO_MODE:
-        return public_demo_read_only()
 
     values = {key: request.form.get(key, "").strip() for key in ("name", "email")}
     password = request.form.get("password", "")
@@ -422,8 +433,6 @@ def quote_page():
 @app.post("/register-waste")
 @app.post("/RegisterWasteProcess.php")
 def register_waste():
-    if DEMO_MODE:
-        return public_demo_read_only()
     fields = ("industry_name", "type_of_waste", "email", "city", "state", "pincode")
     values = {key: request.form.get(key, "").strip() for key in fields}
     try:
@@ -466,8 +475,6 @@ def search():
 @app.post("/disposal")
 @app.post("/process-disposal.php")
 def disposal():
-    if DEMO_MODE:
-        return public_demo_read_only()
     fields = {
         "waste_type": request.form.get("wasteType", "").strip(),
         "email": request.form.get("email", "").strip(),
@@ -493,8 +500,6 @@ def disposal():
 @app.post("/contact")
 @app.post("/forms/contact.php")
 def contact():
-    if DEMO_MODE:
-        return public_demo_read_only()
     fields = tuple(request.form.get(key, "").strip() for key in ("name", "email", "subject", "message"))
     if any(not value for value in fields) or not valid_email(fields[1]):
         return page_message("Message not saved", "Complete every field and enter a valid email address.", success=False, status=400)
@@ -506,8 +511,6 @@ def contact():
 @app.post("/quote")
 @app.post("/forms/quote.php")
 def quote():
-    if DEMO_MODE:
-        return public_demo_read_only()
     keys = ("departure", "delivery", "weight", "dimensions", "name", "email", "phone", "message")
     fields = tuple(request.form.get(key, "").strip() for key in keys)
     if any(not value for value in fields) or not valid_email(fields[5]):

@@ -38,7 +38,7 @@ Open **Analytics** in the site navigation or visit `/analytics` to see listing t
 
 ## Public demo deployment
 
-The repository includes a Render Blueprint (`render.yaml`). Connect the public GitHub repository in Render and create the `wastedeal-demo` web service from that Blueprint. It uses Render's free web service, runs with Gunicorn, and enables read-only demo mode so visitors' form details and passwords are not stored. The sample SQLite database is recreated when the service starts; this deployment is for showcasing the site, not for preserving submitted data. Free services can sleep after inactivity and take about a minute to wake.
+The repository includes a Render Blueprint (`render.yaml`) for the public `wastedeal-demo` site. The public demo accepts guest listings and service requests, and the Analytics page recalculates from those submissions. Sign-in and account creation stay disabled. Use fictional test details: visitor entries and listing contact emails are visible to anyone. The app uses SQLite, so entries are shared across devices while the Render instance is running, but Render's free web service has an ephemeral filesystem; data can be cleared on spin-down, restart, or redeploy. The free service can also take about a minute to wake after inactivity.
 
 ## Existing XAMPP data
 

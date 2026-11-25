@@ -4,14 +4,14 @@
 <body>
   {% include "_header.html" %}
   <main class="analytics-page"><div class="container">
-    <div class="analytics-heading"><div><p class="eyebrow">A view of marketplace activity</p><h1>WasteDeal analytics</h1><p>Review listings, materials, locations, and service requests saved in this local database.</p></div><a class="button button-light" href="/search.html">Browse listings <span aria-hidden="true">→</span></a></div>
-    <aside class="sample-banner"><span class="sample-banner-icon" aria-hidden="true">i</span><p><strong>{{ sample_count }} sample records are included.</strong> They’re marked in search results and counted here to make the charts useful on first launch. Add your own entries through the site forms.</p></aside>
+    <div class="analytics-heading"><div><p class="eyebrow">A view of marketplace activity</p><h1>WasteDeal analytics</h1><p>Review listings, materials, locations, and service requests saved in the shared demo database.</p></div><a class="button button-light" href="/search.html">Browse listings <span aria-hidden="true">→</span></a></div>
+    <aside class="sample-banner"><span class="sample-banner-icon" aria-hidden="true">i</span><p><strong>{{ sample_count }} sample records are included.</strong> They’re marked in search results and counted here. Add a test listing or request through the site forms and reload this page to see the updated totals.</p></aside>
 
     <section class="metric-grid" aria-label="Marketplace summary">
-      <article class="metric-card"><span class="metric-label">Waste listings</span><strong>{{ listing_count }}</strong><span class="metric-foot">{{ user_count }} registered accounts</span></article>
+      <article class="metric-card"><span class="metric-label">Waste listings</span><strong>{{ listing_count }}</strong><span class="metric-foot">{{ visitor_listing_count }} visitor · {{ sample_listing_count }} sample</span></article>
       <article class="metric-card"><span class="metric-label">Listed material</span><strong>{{ quantity_total }} <small>kg</small></strong><span class="metric-foot">Combined available quantity</span></article>
       <article class="metric-card"><span class="metric-label">Average listed price</span><strong>₹{{ average_price }} <small>/ kg</small></strong><span class="metric-foot">Across current listings</span></article>
-      <article class="metric-card"><span class="metric-label">Requests and messages</span><strong>{{ total_requests }}</strong><span class="metric-foot">Disposal, quote, and contact forms</span></article>
+      <article class="metric-card"><span class="metric-label">Requests and messages</span><strong>{{ total_requests }}</strong><span class="metric-foot">{{ visitor_request_count }} visitor · {{ sample_request_count }} sample</span></article>
     </section>
 
     <section class="analytics-grid">
@@ -33,7 +33,7 @@
         {% if locations %}<div class="location-list">{% for place in locations %}<div class="location-row"><span class="location-pin" aria-hidden="true">⌖</span><div><strong>{{ place.city }}</strong><span>{{ place.state }} · {{ place.listings }} listing(s)</span></div><b>{{ place.quantity|round(0)|int }} kg</b></div>{% endfor %}</div>{% else %}<p>No locations yet. Listings will appear here.</p>{% endif %}
       </article>
     </section>
-    <p class="analytics-footnote">Analytics are calculated from the local SQLite database. Sample rows are fictional examples; request and listing totals update as records are added.</p>
+    <p class="analytics-footnote">Analytics are calculated from SQLite. Sample rows are fictional examples; visitor entries update totals and charts. Hosted demo data may reset when the free server restarts.</p>
   </div></main>
   {% include "_footer.html" %}
 </body>
