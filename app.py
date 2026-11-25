@@ -21,7 +21,12 @@ DATABASE = DATABASE.resolve()
 
 app = Flask(__name__, static_folder=None, template_folder="templates")
 app.secret_key = os.environ.get("WASTEDEAL_SECRET_KEY", "local-development-key-change-before-deployment")
-app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE="Lax")
+DEMO_MODE = os.environ.get("WASTEDEAL_DEMO_MODE", "").lower() in {"1", "true", "yes"}
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=bool(os.environ.get("RENDER_EXTERNAL_HOSTNAME")),
+)
 
 CARBON_FACTORS = {
     "dry": 0.1,
@@ -219,6 +224,20 @@ def page_message(title: str, message: str, *, success: bool = True, status: int 
     return render_template("message.html", title=title, message=message, success=success), status
 
 
+def public_demo_read_only():
+    return page_message(
+        "Public demo is read-only",
+        "This public demo uses sample data. Account creation and form submissions are disabled.",
+        success=False,
+        status=403,
+    )
+
+
+@app.context_processor
+def inject_demo_mode():
+    return {"demo_mode": DEMO_MODE}
+
+
 def valid_email(value: str) -> bool:
     return bool(re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", value.strip()))
 
@@ -313,6 +332,8 @@ def login():
     error = None
     email = ""
     if request.method == "POST":
+        if DEMO_MODE:
+            return public_demo_read_only()
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "")
         user = get_db().execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -329,6 +350,8 @@ def login():
 def signup():
     if request.method == "GET":
         return render_template("signup.html", error=None, values={})
+    if DEMO_MODE:
+        return public_demo_read_only()
 
     values = {key: request.form.get(key, "").strip() for key in ("name", "email")}
     password = request.form.get("password", "")
@@ -399,6 +422,8 @@ def quote_page():
 @app.post("/register-waste")
 @app.post("/RegisterWasteProcess.php")
 def register_waste():
+    if DEMO_MODE:
+        return public_demo_read_only()
     fields = ("industry_name", "type_of_waste", "email", "city", "state", "pincode")
     values = {key: request.form.get(key, "").strip() for key in fields}
     try:
@@ -441,6 +466,8 @@ def search():
 @app.post("/disposal")
 @app.post("/process-disposal.php")
 def disposal():
+    if DEMO_MODE:
+        return public_demo_read_only()
     fields = {
         "waste_type": request.form.get("wasteType", "").strip(),
         "email": request.form.get("email", "").strip(),
@@ -466,6 +493,8 @@ def disposal():
 @app.post("/contact")
 @app.post("/forms/contact.php")
 def contact():
+    if DEMO_MODE:
+        return public_demo_read_only()
     fields = tuple(request.form.get(key, "").strip() for key in ("name", "email", "subject", "message"))
     if any(not value for value in fields) or not valid_email(fields[1]):
         return page_message("Message not saved", "Complete every field and enter a valid email address.", success=False, status=400)
@@ -477,6 +506,8 @@ def contact():
 @app.post("/quote")
 @app.post("/forms/quote.php")
 def quote():
+    if DEMO_MODE:
+        return public_demo_read_only()
     keys = ("departure", "delivery", "weight", "dimensions", "name", "email", "phone", "message")
     fields = tuple(request.form.get(key, "").strip() for key in keys)
     if any(not value for value in fields) or not valid_email(fields[5]):

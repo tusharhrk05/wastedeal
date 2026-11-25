@@ -36,6 +36,10 @@ The app adds 19 clearly marked fictional sample records on its first startup: 9 
 
 Open **Analytics** in the site navigation or visit `/analytics` to see listing totals, material quantities, six-month listing activity, request counts, and leading listing locations. The dashboard reads the SQLite database and includes both sample and real records. Existing real data is preserved.
 
+## Public demo deployment
+
+The repository includes a Render Blueprint (`render.yaml`). Connect the public GitHub repository in Render and create the `wastedeal-demo` web service from that Blueprint. It uses Render's free web service, runs with Gunicorn, and enables read-only demo mode so visitors' form details and passwords are not stored. The sample SQLite database is recreated when the service starts; this deployment is for showcasing the site, not for preserving submitted data. Free services can sleep after inactivity and take about a minute to wake.
+
 ## Existing XAMPP data
 
 The project did not include a MySQL export or a consistent schema to import. Existing XAMPP data must be exported and converted separately if you want to keep it. The Python app does not need the old PHP backend.

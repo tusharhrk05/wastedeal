@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: wastedeal-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: "gunicorn --workers 1 --threads 4 --bind 0.0.0.0:$PORT app:app"
+    healthCheckPath: /
+    autoDeployTrigger: commit
+    envVars:
+      - key: WASTEDEAL_DEMO_MODE
+        value: "1"
+      - key: WASTEDEAL_SECRET_KEY
+        generateValue: true
