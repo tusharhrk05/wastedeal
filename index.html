@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Credit Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .waste-input {
+            margin-bottom: 10px;
+        }
+    </style>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+    <h1>Carbon Credit Calculator</h1>
+    <div class="waste-input">
+        <label for="dryWaste">Dry Waste (kg):</label>
+        <input type="number" id="dryWaste" value="0">
+    </div>
+    <div class="waste-input">
+        <label for="plasticWaste">Plastic Waste (kg):</label>
+        <input type="number" id="plasticWaste" value="0">
+    </div>
+    <div class="waste-input">
+        <label for="chemicalWaste">Chemical Waste (kg):</label>
+        <input type="number" id="chemicalWaste" value="0">
+    </div>
+    <div class="waste-input">
+        <label for="paperWaste">Paper Waste (kg):</label>
+        <input type="number" id="paperWaste" value="0">
+    </div>
+    <div class="waste-input">
+        <label for="organicWaste">Organic Waste (kg):</label>
+        <input type="number" id="organicWaste" value="0">
+    </div>
+    <div class="waste-input">
+        <label for="metalWaste">Metal Waste (kg):</label>
+        <input type="number" id="metalWaste" value="0">
+    </div>
+
+    <button onclick="calculateCarbonCredits()">Calculate Carbon Credits</button>
+    <p id="carbonCreditsResult"></p>
+
+    <script>
+        function calculateCarbonCredits() {
+            const dryWaste = parseFloat(document.getElementById('dryWaste').value);
+            const plasticWaste = parseFloat(document.getElementById('plasticWaste').value);
+            const chemicalWaste = parseFloat(document.getElementById('chemicalWaste').value);
+            const paperWaste = parseFloat(document.getElementById('paperWaste').value);
+            const organicWaste = parseFloat(document.getElementById('organicWaste').value);
+            const metalWaste = parseFloat(document.getElementById('metalWaste').value);
+
+            // Arbitrary carbon emission factors (kg CO2 per kg of waste)
+            const dryFactor = 0.1;
+            const plasticFactor = 2.5;
+            const chemicalFactor = 5.0;
+            const paperFactor = 0.8;
+            const organicFactor = 0.5;
+            const metalFactor = 0.2;
+
+            const totalCarbonEmissions =
+                (dryWaste * dryFactor) +
+                (plasticWaste * plasticFactor) +
+                (chemicalWaste * chemicalFactor) +
+                (paperWaste * paperFactor) +
+                (organicWaste * organicFactor) +
+                (metalWaste * metalFactor);
+
+            document.getElementById('carbonCreditsResult').textContent =
+                `Total Carbon Emissions: ${totalCarbonEmissions.toFixed(2)} kg CO2`;
+        }
+    </script>
+</body>
+</html>

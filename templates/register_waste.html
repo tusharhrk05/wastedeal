@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>List material · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="form-page"><div class="container form-layout">
+    <section class="form-intro"><p class="eyebrow">Give surplus a next step</p><h1>List a material.</h1><p>Add clear details so interested buyers can understand what you have and where it is available.</p><a class="text-link" href="/search.html">Browse existing listings <span>→</span></a></section>
+    <section class="form-card"><h2>Listing details</h2><form method="post" action="/register-waste"><div class="form-grid">
+      <div><label for="industry-name">Business or industry</label><input id="industry-name" name="industry_name" autocomplete="organization" required></div>
+      <div><label for="type-of-waste">Material type</label><input id="type-of-waste" name="type_of_waste" placeholder="e.g. paper, plastic, metal" required></div>
+      <div class="field-full"><label for="listing-email">Contact email</label><input id="listing-email" type="email" name="email" autocomplete="email" required></div>
+      <div><label for="city">City</label><input id="city" name="city" required></div>
+      <div><label for="state">State</label><input id="state" name="state" required></div>
+      <div><label for="pincode">Postal code</label><input id="pincode" name="pincode" inputmode="numeric" required></div>
+      <div><label for="quantity">Quantity (kg)</label><input id="quantity" name="quantity" type="number" min="0.01" step="any" required></div>
+      <div class="field-full"><label for="price">Price per kg (₹)</label><input id="price" name="price" type="number" min="0" step="any" required></div>
+    </div><button type="submit">Publish listing <span aria-hidden="true">→</span></button><p class="form-note">Your contact email will be visible to buyers who find this listing.</p></form></section>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

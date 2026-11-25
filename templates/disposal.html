@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Disposal request · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="form-page"><div class="container form-layout">
+    <section class="form-intro"><p class="eyebrow">Special handling</p><h1>Request disposal support.</h1><p>Tell us what needs handling and where it is located. The team can follow up using the contact details you provide.</p></section>
+    <section class="form-card"><h2>Your disposal request</h2><form method="post" action="/disposal"><div class="form-grid">
+      <div class="field-full"><label for="wasteType">Type of waste</label><input id="wasteType" name="wasteType" placeholder="Describe the material" required></div>
+      <div class="field-full"><label for="disposal-email">Email address</label><input id="disposal-email" type="email" name="email" autocomplete="email" required></div>
+      <div><label for="city">City</label><input id="city" name="city" required></div>
+      <div><label for="state">State</label><input id="state" name="state" required></div>
+      <div class="field-full"><label for="mobileNo">10-digit mobile number</label><input id="mobileNo" name="mobileNo" type="tel" inputmode="numeric" pattern="[0-9]{10}" required></div>
+    </div><button type="submit">Send request <span aria-hidden="true">→</span></button></form></section>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

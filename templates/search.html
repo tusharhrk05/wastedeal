@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Browse materials · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="form-page"><div class="container form-layout">
+    <section class="form-intro"><p class="eyebrow">Find your next resource</p><h1>Search available materials.</h1><p>Search by material or waste type to see current listings, quantities, prices, and locations.</p><a class="text-link" href="/registerwaste.html">Have something to list? <span>→</span></a></section>
+    <section class="form-card"><h2>What are you looking for?</h2><form method="post" action="/search"><div><label for="waste-type">Material or waste type</label><input id="waste-type" name="waste_type" placeholder="For example, plastic or paper" required></div><button type="submit">Search listings <span aria-hidden="true">→</span></button></form></section>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

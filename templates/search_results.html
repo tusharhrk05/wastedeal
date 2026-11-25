@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Search results · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="results-wrap"><div class="container">
+    <p class="eyebrow">The materials board</p><h1 class="results-title">Results for “{{ term }}”</h1>
+    {% if listings %}<p class="results-summary">{{ listings|length }} listing(s) found. Reach out to the owner to discuss availability.</p><section class="listing-grid" aria-label="Waste listings">
+      {% for item in listings %}<article class="listing-card"><p class="eyebrow">{{ item.city }}, {{ item.state }}{% if item.is_sample %}<span class="sample-tag">Sample</span>{% endif %}</p><h2>{{ item.type_of_waste }}</h2><div class="listing-meta"><p><strong>Industry</strong>{{ item.industry_name }}</p><p><strong>Quantity</strong>{{ item.quantity }} kg</p><p><strong>Price</strong>₹{{ item.price }} / kg</p><p><strong>Area code</strong>{{ item.pincode }}</p></div>{% if item.is_sample %}<p class="sample-caption">Example data only. Seller contact details are illustrative.</p>{% else %}<a class="button" href="mailto:{{ item.email }}?subject=WasteDeal%20listing%20{{ item.id }}">Contact seller <span aria-hidden="true">→</span></a>{% endif %}</article>{% endfor %}
+    </section>{% else %}<section class="empty-state"><span class="card-icon" aria-hidden="true">⌕</span><h2>No matching listings yet</h2><p>Try a broader material name or check back after more businesses post listings.</p></section>{% endif %}
+    <p style="margin-top:24px"><a class="text-link" href="/search.html">← Search another material</a></p>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

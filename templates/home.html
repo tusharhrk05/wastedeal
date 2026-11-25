@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f2">
+  <meta name="description" content="List reusable industrial waste, find materials, and connect with local recycling opportunities on WasteDeal.">
+  <title>WasteDeal — Give materials a second life</title>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body class="home-page">
+  {% include "_header.html" %}
+  <main>
+    <div class="container">
+      <section class="home-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A marketplace for better material use</p>
+          {% if user %}<p class="welcome-note">Welcome back, {{ user.name }}.</p>{% endif %}
+          <h1>Waste has more than <em>one life.</em></h1>
+          <p>Find a useful next step for surplus materials. List what your business has, discover what others need, and make reuse easier to start.</p>
+          <div class="hero-actions">
+            <a class="button" href="/search.html">Find materials <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4-4 4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a class="button button-light" href="/registerwaste.html">List a material</a>
+          </div>
+          <div class="hero-caption"><span class="caption-dot"></span><span>A simple place to connect surplus with demand.</span></div>
+        </div>
+        <div class="hero-visual">
+          <img src="/bg.jpg" alt="Color-coded bins for separating different kinds of waste">
+          <div class="visual-note"><span class="visual-note-mark" aria-hidden="true">↗</span><span><strong>From leftover to useful</strong><span>Make your next material connection.</span></span></div>
+        </div>
+      </section>
+
+      <section class="home-section" id="how-it-works">
+        <div class="section-heading">
+          <p class="eyebrow">A clearer way forward</p>
+          <h2>Make something useful happen next.</h2>
+          <p>Whether you have material to move or need a reliable source, start with the step that fits your business.</p>
+        </div>
+        <div class="action-grid">
+          <article class="action-card"><span class="card-icon" aria-hidden="true">⌕</span><h3>Find materials</h3><p>Search current listings by waste type and explore available quantities, prices, and locations.</p><a class="text-link" href="/search.html">Browse listings <span>→</span></a></article>
+          <article class="action-card"><span class="card-icon" aria-hidden="true">＋</span><h3>List what you have</h3><p>Share material details and give potential buyers a clear way to reach you.</p><a class="text-link" href="/registerwaste.html">Create a listing <span>→</span></a></article>
+          <article class="action-card"><span class="card-icon" aria-hidden="true">↻</span><h3>Arrange disposal</h3><p>Send a request for waste that needs specialist handling and provide a contact location.</p><a class="text-link" href="/wastedisposal.html">Start a request <span>→</span></a></article>
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div><h2>Have material waiting for its next use?</h2><p>Put the details in one clear listing and let interested buyers find it.</p></div>
+        <a class="button" href="/registerwaste.html">List your material <span aria-hidden="true">→</span></a>
+      </section>
+    </div>
+  </main>
+  {% include "_footer.html" %}
+</body>
+</html>

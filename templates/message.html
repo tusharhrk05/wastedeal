@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ title }} · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="message-shell"><span class="message-icon" aria-hidden="true">{% if success %}✓{% else %}!{% endif %}</span><p class="eyebrow">WasteDeal update</p><h1>{{ title }}</h1><p>{{ message }}</p><div class="message-actions"><a class="button" href="/">Back to home</a><a class="button button-light" href="/search.html">Browse materials</a></div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

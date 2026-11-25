@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.py[cod]
+instance/
+.env
+
+# Retired PHP/XAMPP copy and unused source leftovers
+legacy-php/
+Readme.txt
+test.html
+index.css
+index3.html
+script.js
+hazard.jpg
+icon.jpg
+icon.png
+logo.png
+signupwali.jpg

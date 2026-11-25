@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carbon Credit Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .waste-input {
+            margin-bottom: 10px;
+        }
+        #dataInput {
+            display: none;
+        }
+    </style>
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+    <h1>Carbon Credit Calculator</h1>
+
+    <label for="wasteType">Select Waste Type:</label>
+    <select id="wasteType" onchange="showInput()">
+        <option value="">Select...</option>
+        <option value="dry">Dry Waste</option>
+        <option value="plastic">Plastic Waste</option>
+        <option value="chemical">Chemical Waste</option>
+        <option value="paper">Paper Waste</option>
+        <option value="organic">Organic Waste</option>
+        <option value="metal">Metal Waste</option>
+        <option value="glass">Glass Waste</option>
+    </select>
+
+    <div id="dataInput">
+        <label id="inputLabel" for="wasteAmount">Waste Amount (kg):</label>
+        <input type="number" id="wasteAmount" value="0">
+        <button onclick="calculateIndividualCarbon()">Calculate</button>
+        <p id="individualCarbonResult"></p>
+    </div>
+
+    <p id="carbonCreditsResult"></p>
+
+    <script>
+        function showInput() {
+            const wasteType = document.getElementById('wasteType').value;
+            const dataInput = document.getElementById('dataInput');
+            const inputLabel = document.getElementById('inputLabel');
+
+            if (wasteType) {
+                dataInput.style.display = 'block';
+                inputLabel.textContent = `${wasteType.charAt(0).toUpperCase() + wasteType.slice(1)} Waste Amount (kg):`;
+            } else {
+                dataInput.style.display = 'none';
+            }
+        }
+
+        function calculateIndividualCarbon() {
+            const wasteType = document.getElementById('wasteType').value;
+            const wasteAmount = parseFloat(document.getElementById('wasteAmount').value);
+
+            // Fetch carbon factors from database (replace with your actual database logic)
+            fetch('/carbon-factors?wasteType=' + wasteType)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.carbon_factor) {
+                        const carbonFactor = parseFloat(data.carbon_factor);
+                        const carbonEmissions = wasteAmount * carbonFactor;
+                        document.getElementById('individualCarbonResult').textContent =
+                            `Carbon Emissions: ${carbonEmissions.toFixed(2)} kg CO2`;
+                    } else {
+                        document.getElementById('individualCarbonResult').textContent = "Carbon factor not found.";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching carbon factors:', error);
+                    document.getElementById('individualCarbonResult').textContent = "Error fetching data.";
+                });
+        }
+
+    </script>
+</body>
+</html>

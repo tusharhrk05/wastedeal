@@ -1,0 +1,16 @@
+<header class="site-header">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="WasteDeal home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 20V11m0 4c-4.6 0-7-2.5-7-6 4.7 0 7 2.1 7 6Zm0-2c0-4.4 2.6-7 7-7 0 4.6-2.5 7-7 7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 20h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      <span>Waste<span>Deal</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="/#how-it-works">How it works</a>
+      <a href="/search.html">Browse</a>
+      <a href="/analytics">Analytics</a>
+      <a href="/contact.html">Contact</a>
+      {% if session.get('user_id') %}<a href="/logout">Log out</a>{% else %}<a href="/login">Log in</a>{% endif %}
+      <a class="nav-cta" href="/registerwaste.html">List material</a>
+    </nav>
+  </div>
+</header>

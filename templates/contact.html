@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Contact · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="form-page"><div class="container form-layout">
+    <section class="form-intro"><p class="eyebrow">We’re here to help</p><h1>Let’s talk materials.</h1><p>Questions about a listing, reuse, or disposal? Send a note and include the details that will help us understand your request.</p><div class="contact-detail"><span class="card-icon" aria-hidden="true">✉</span><div><strong>Email</strong><p>wastedeal00@gmail.com</p></div></div><div class="contact-detail"><span class="card-icon" aria-hidden="true">⌖</span><div><strong>Location</strong><p>Panipat, Haryana, India</p></div></div></section>
+    <section class="form-card"><h2>Send a message</h2><form method="post" action="/contact"><div class="form-grid">
+      <div><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required></div>
+      <div><label for="email">Email address</label><input id="email" type="email" name="email" autocomplete="email" required></div>
+      <div class="field-full"><label for="subject">Subject</label><input id="subject" name="subject" required></div>
+      <div class="field-full"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
+    </div><button type="submit">Send message <span aria-hidden="true">→</span></button></form></section>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>

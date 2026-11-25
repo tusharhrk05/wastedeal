@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Request a quote · WasteDeal</title><link rel="stylesheet" href="/site.css"></head>
+<body>
+  {% include "_header.html" %}
+  <main class="form-page"><div class="container form-layout">
+    <section class="form-intro"><p class="eyebrow">Plan a material movement</p><h1>Request a quote.</h1><p>Share where it needs to go, what you need moved, and how to reach you. We’ll save the request for follow-up.</p></section>
+    <section class="form-card"><h2>Movement and contact details</h2><form method="post" action="/quote"><div class="form-grid">
+      <div><label for="departure">From city</label><input id="departure" name="departure" required></div>
+      <div><label for="delivery">To city</label><input id="delivery" name="delivery" required></div>
+      <div><label for="weight">Total weight</label><input id="weight" name="weight" placeholder="e.g. 200 kg" required></div>
+      <div><label for="dimensions">Dimensions</label><input id="dimensions" name="dimensions" placeholder="e.g. 120 × 80 × 90 cm" required></div>
+      <div><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required></div>
+      <div><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+      <div class="field-full"><label for="phone">Phone number</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
+      <div class="field-full"><label for="message">Additional details</label><textarea id="message" name="message" required></textarea></div>
+    </div><button type="submit">Request a quote <span aria-hidden="true">→</span></button></form></section>
+  </div></main>
+  {% include "_footer.html" %}
+</body>
+</html>
